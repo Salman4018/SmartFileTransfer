@@ -1,6 +1,8 @@
 ﻿using System;
 using AzureFunctions;
 using DataBase.Models;
+using DataBase.Services;
+using DataBase.Services.Interface;
 using Microsoft.Azure.Functions.Extensions.DependencyInjection;
 using Microsoft.Azure.WebJobs.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -16,12 +18,14 @@ namespace AzureFunctions
             var connString = Environment.GetEnvironmentVariable("SqlConnectionString");
            
             builder.Services.AddDbContext<DBContext>(options => options
-                    .UseSqlServer(connString ?? throw new ArgumentNullException("Connection String is null"), item => item.EnableRetryOnFailure())
+                    .UseSqlServer(connString ?? throw new ArgumentNullException(connString ,"Connection String is null"), item => item.EnableRetryOnFailure())
                     .UseSqlServer(o => o.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery))
                     .EnableSensitiveDataLogging()
                     .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking),
                 ServiceLifetime.Transient);
 
+            builder.Services.AddTransient<IGenericService<Customer>, CustomerService>();
+            builder.Services.AddTransient<IGenericService<ProtectedZippedFiles>, ProtectedZippedFilesService>();
         }
     }
 }

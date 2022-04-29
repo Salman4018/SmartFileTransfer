@@ -1,21 +1,20 @@
-using System.Linq;
 using System.Threading.Tasks;
 using DataBase.Models;
+using DataBase.Services.Interface;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 namespace AzureFunctions.Functions
 {
     public  class CustomerDataFunc
     {
-        private readonly DBContext _dbContext;
-        public CustomerDataFunc(DBContext dbContext)
+        private readonly IGenericService<Customer> _customerService;
+        public CustomerDataFunc(IGenericService<Customer> customerService)
         {
-            _dbContext = dbContext;
+            _customerService = customerService;
         }
 
         /// <summary>
@@ -24,15 +23,13 @@ namespace AzureFunctions.Functions
         /// <param name="req"></param>
         /// <param name="log"></param>
         /// <returns></returns>
-        [FunctionName("WakeUpFunction")]
-        public async Task<IActionResult> WakeUpFunction(
+        [FunctionName("WarmUpFunction")]
+        public Task<IActionResult> WarmUpFunction(
             [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = null)] HttpRequest req,
             ILogger log)
         {
-            log.LogInformation("C# HTTP trigger function processed a request.");
-
-
-            return new OkObjectResult("This is a WakeUp Function call!");
+            log.LogInformation("WarmUpFunction is Triggered");
+            return Task.FromResult<IActionResult>(new OkObjectResult("This is a WarmUpFunction Function call!"));
         }
 
 
@@ -47,11 +44,9 @@ namespace AzureFunctions.Functions
             [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = null)] HttpRequest req,
             ILogger log)
         {
-            log.LogInformation("C# HTTP trigger function processed a request.");
+            log.LogInformation("C# HTTP trigger function 'GetCustomerData'");
 
-
-            var customersList = await _dbContext.Customer.ToListAsync();
-
+            var customersList = await _customerService.GetAll();
             return new OkObjectResult(customersList);
         }
 
@@ -67,15 +62,15 @@ namespace AzureFunctions.Functions
             [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = null)] HttpRequest req,
             ILogger log)
         {
-            log.LogInformation("C# HTTP trigger function processed a request.");
+            log.LogInformation("C# HTTP trigger function 'GetCustomerDataById'");
             var customerIdString = req.Query["id"];
 
             if(string.IsNullOrEmpty(customerIdString)) return new BadRequestObjectResult("Id is null");
 
             if (int.TryParse(customerIdString, out var customerId))
             {
-                var customersList = await _dbContext.Customer.ToListAsync();
-                return new OkObjectResult(customersList.FirstOrDefault(i => i.Id.Equals(customerId)));
+                var customer = await _customerService.GetById(customerId);
+                return new OkObjectResult(customer);
             }
 
             return new BadRequestObjectResult("Error occurred in Function 'GetCustomerDataById' !!");
