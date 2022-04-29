@@ -10,9 +10,9 @@ namespace AzureFunctions.FunctionServices;
 
 public class ZippedFilesFunctionService : IZippedFilesFunctionService
 {
-    private readonly IGenericDataBaseService<ProtectedZippedFiles> _protectedZippedFilesService;
+    private readonly IGenericDataBaseService<ZippedFiles> _protectedZippedFilesService;
 
-    public ZippedFilesFunctionService(IGenericDataBaseService<ProtectedZippedFiles> protectedZippedFilesService)
+    public ZippedFilesFunctionService(IGenericDataBaseService<ZippedFiles> protectedZippedFilesService)
     {
         _protectedZippedFilesService = protectedZippedFilesService;
     }
@@ -39,7 +39,7 @@ public class ZippedFilesFunctionService : IZippedFilesFunctionService
     private async Task _SaveZipFileToDB(byte[] byteFile, string filePath)
     {
         var fileName = $"{Path.GetFileNameWithoutExtension(filePath)}.zip";
-        var zippedFile = new ProtectedZippedFiles
+        var zippedFile = new ZippedFiles
         {
             Name = fileName,
             FileContent = byteFile,

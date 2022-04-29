@@ -1,10 +1,8 @@
-using System;
 using System.IO;
 using System.Threading.Tasks;
 using AzureFunctions.FunctionServices.Interface;
 using DataBase.DataBaseServices.Interface;
 using DataBase.Models;
-using Ionic.Zip;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.WebJobs;
@@ -15,11 +13,11 @@ namespace AzureFunctions.Functions
 {
     public class ZippedFilesFunc
     {
-        private readonly IGenericDataBaseService<ProtectedZippedFiles> _protectedZippedFilesService;
+        private readonly IGenericDataBaseService<ZippedFiles> _protectedZippedFilesService;
         private readonly IZippedFilesFunctionService _protectedZippedFilesFunctionService;
         private ILogger _log;
         public ZippedFilesFunc(
-            IGenericDataBaseService<ProtectedZippedFiles> protectedZippedFilesService, 
+            IGenericDataBaseService<ZippedFiles> protectedZippedFilesService, 
             IZippedFilesFunctionService protectedZippedFilesFunctionService)
         {
             _protectedZippedFilesService = protectedZippedFilesService;

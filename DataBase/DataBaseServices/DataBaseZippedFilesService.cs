@@ -5,7 +5,7 @@ using Microsoft.Extensions.Logging;
 
 namespace DataBase.DataBaseServices;
 
-public class DataBaseZippedFilesService: IGenericDataBaseService<ProtectedZippedFiles>
+public class DataBaseZippedFilesService: IGenericDataBaseService<ZippedFiles>
 {
     private readonly DBContext _dbContext;
     private readonly ILogger _log;
@@ -19,11 +19,11 @@ public class DataBaseZippedFilesService: IGenericDataBaseService<ProtectedZipped
     /// </summary>
     /// <returns></returns>
     /// <exception cref="NotImplementedException"></exception>
-    public async Task<List<ProtectedZippedFiles>> GetAll()
+    public async Task<List<ZippedFiles>> GetAll()
     {
         try
         {
-            var zippedFiles = await _dbContext.ProtectedZippedFiles.ToListAsync();
+            var zippedFiles = await _dbContext.ZippedFiles.ToListAsync();
             return zippedFiles;
         }
         catch (Exception ex)
@@ -39,11 +39,11 @@ public class DataBaseZippedFilesService: IGenericDataBaseService<ProtectedZipped
     /// <param name="id"></param>
     /// <returns></returns>
     /// <exception cref="NotImplementedException"></exception>
-    public async Task<ProtectedZippedFiles> GetById(int id)
+    public async Task<ZippedFiles> GetById(int id)
     {
         try
         {
-            var zippedFiles = await _dbContext.ProtectedZippedFiles.ToListAsync();
+            var zippedFiles = await _dbContext.ZippedFiles.ToListAsync();
             return zippedFiles.FirstOrDefault(i => i.Id.Equals(id));
         }
         catch (Exception ex)
@@ -58,7 +58,7 @@ public class DataBaseZippedFilesService: IGenericDataBaseService<ProtectedZipped
     /// </summary>
     /// <param name="zippedFile"></param>
     /// <returns></returns>
-    public async Task<ProtectedZippedFiles> Add(ProtectedZippedFiles zippedFile)
+    public async Task<ZippedFiles> Add(ZippedFiles zippedFile)
     {
         try
         {
@@ -90,7 +90,7 @@ public class DataBaseZippedFilesService: IGenericDataBaseService<ProtectedZipped
     /// <param name="classObject"></param>
     /// <returns></returns>
     /// <exception cref="NotImplementedException"></exception>
-    public async Task<bool> Update(ProtectedZippedFiles classObject)
+    public async Task<bool> Update(ZippedFiles classObject)
     {
         throw new NotImplementedException();
     }
