@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using AzureFunctions.FunctionServices.Interface;
 using DataBase.DataBaseServices.Interface;
@@ -28,23 +29,28 @@ public class ZippedFilesFunctionService : IZippedFilesFunctionService
     {
         SaveStreamAsFile(blob, filepath);
         var byteFile = _CreateProtectedZipFile(folderPath, filepath);
-        await _SaveZipFileToDB(byteFile, filepath);
-    }
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="byteFile"></param>
-    /// <param name="filePath"></param>
-    /// <returns></returns>
-    private async Task _SaveZipFileToDB(byte[] byteFile, string filePath)
-    {
-        var fileName = $"{Path.GetFileNameWithoutExtension(filePath)}.zip";
+
+        var fileName = $"{Path.GetFileNameWithoutExtension(filepath)}.zip";
         var zippedFile = new ZippedFiles
         {
             Name = fileName,
             FileContent = byteFile,
             CreatedDateTime = DateTime.Now
         };
+
+
+        var files = await _protectedZippedFilesService.GetAll();
+        var existingFile = files.FirstOrDefault(f =>
+            f.Name.ToUpper().Equals(fileName.ToUpper()));
+
+
+        if (existingFile is not null)
+        {
+            existingFile.FileContent = byteFile;
+            existingFile.CreatedDateTime = DateTime.Now;
+            await _protectedZippedFilesService.Update(existingFile);
+            return;
+        }
         await _protectedZippedFilesService.Add(zippedFile);
     }
 

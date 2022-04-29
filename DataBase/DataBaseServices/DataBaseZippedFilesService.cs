@@ -18,7 +18,6 @@ public class DataBaseZippedFilesService: IGenericDataBaseService<ZippedFiles>
     /// 
     /// </summary>
     /// <returns></returns>
-    /// <exception cref="NotImplementedException"></exception>
     public async Task<List<ZippedFiles>> GetAll()
     {
         try
@@ -38,7 +37,6 @@ public class DataBaseZippedFilesService: IGenericDataBaseService<ZippedFiles>
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
-    /// <exception cref="NotImplementedException"></exception>
     public async Task<ZippedFiles> GetById(int id)
     {
         try
@@ -48,7 +46,7 @@ public class DataBaseZippedFilesService: IGenericDataBaseService<ZippedFiles>
         }
         catch (Exception ex)
         {
-            _log.LogError("Error Occurred in CustomerService 'GetAll'", ex);
+            _log.LogError("Error Occurred in CustomerService 'GetById'", ex);
             return null;
         }
     }
@@ -68,7 +66,7 @@ public class DataBaseZippedFilesService: IGenericDataBaseService<ZippedFiles>
         }
         catch (Exception ex)
         {
-            _log.LogError("Error Occurred in CustomerService 'GetAll'", ex);
+            _log.LogError("Error Occurred in CustomerService 'Add'", ex);
             return null;
         }
     }
@@ -78,20 +76,40 @@ public class DataBaseZippedFilesService: IGenericDataBaseService<ZippedFiles>
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
-    /// <exception cref="NotImplementedException"></exception>
     public async Task<bool> Delete(int id)
     {
-        throw new NotImplementedException();
+        try
+        {
+            var zippedFile = new ZippedFiles() { Id = id };
+            _dbContext.Entry(zippedFile).State = EntityState.Deleted;
+            await _dbContext.SaveChangesAsync();
+            return true;
+        }
+        catch (Exception ex)
+        {
+            _log.LogError("Error Occurred in CustomerService 'Delete'", ex);
+            return false;
+        }
     }
 
+ 
     /// <summary>
     /// 
     /// </summary>
-    /// <param name="classObject"></param>
+    /// <param name="zippedFile"></param>
     /// <returns></returns>
-    /// <exception cref="NotImplementedException"></exception>
-    public async Task<bool> Update(ZippedFiles classObject)
+    public async Task<bool> Update(ZippedFiles zippedFile)
     {
-        throw new NotImplementedException();
+        try
+        {
+            _dbContext.Entry(zippedFile).State = EntityState.Modified;
+            await _dbContext.SaveChangesAsync();
+            return true;
+        }
+        catch (Exception ex)
+        {
+            _log.LogError("Error Occurred in CustomerService 'Update'", ex);
+            return false;
+        }
     }
 }

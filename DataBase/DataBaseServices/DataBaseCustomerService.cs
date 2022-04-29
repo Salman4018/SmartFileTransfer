@@ -57,10 +57,9 @@ namespace DataBase.DataBaseServices
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="classObject"></param>
+        /// <param name="customer"></param>
         /// <returns></returns>
-        /// <exception cref="NotImplementedException"></exception>
-        public async Task<Customer> Add(Customer classObject)
+        public async Task<Customer> Add(Customer customer)
         {
             throw new NotImplementedException();
         }

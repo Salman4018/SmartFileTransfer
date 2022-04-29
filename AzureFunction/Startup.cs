@@ -27,7 +27,7 @@ namespace AzureFunctions
                 ServiceLifetime.Transient);
 
             builder.Services.AddTransient<IGenericDataBaseService<Customer>, DataBaseCustomerService>();
-            builder.Services.AddTransient<IGenericDataBaseService<ProtectedZippedFiles>, DataBaseZippedFilesService>();
+            builder.Services.AddTransient<IGenericDataBaseService<ZippedFiles>, DataBaseZippedFilesService>();
             builder.Services.AddTransient<IZippedFilesFunctionService, ZippedFilesFunctionService>();
         }
     }

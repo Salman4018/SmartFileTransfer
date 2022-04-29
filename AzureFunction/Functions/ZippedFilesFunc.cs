@@ -31,7 +31,7 @@ namespace AzureFunctions.Functions
         /// <param name="name"></param>
         /// <param name="log"></param>
         [FunctionName("ProtectedZippedFileTriggeredFunc")]
-        public async Task Run([BlobTrigger("azurefunctions4018zipblobtriggered/{name}", Connection = "")]Stream myBlob, string name, ILogger log)
+        public async Task ProtectedZippedFileTriggeredFunc([BlobTrigger("azurefunctions4018zipblobtriggered/{name}", Connection = "")]Stream myBlob, string name, ILogger log)
         {
             _log = log;
             log.LogInformation($"C# Blob trigger function Processed blob\n Name:{name} \n Size: {myBlob.Length} Bytes");
@@ -42,7 +42,7 @@ namespace AzureFunctions.Functions
                 Directory.CreateDirectory(folderPath);
             }
             var filepath = Path.Combine(folderPath, name);
-             await _protectedZippedFilesFunctionService.CreateAndSaveProtectedZippedFile(myBlob, folderPath, filepath);
+            await _protectedZippedFilesFunctionService.CreateAndSaveProtectedZippedFile(myBlob, folderPath, filepath);
         }
 
         /// <summary>
