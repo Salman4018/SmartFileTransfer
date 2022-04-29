@@ -36,7 +36,8 @@ namespace AzureFunctions.Functions
             _log = log;
             log.LogInformation($"C# Blob trigger function Processed blob\n Name:{name} \n Size: {myBlob.Length} Bytes");
 
-            string folderPath = @"c:\temp\TempZipFile";
+            var path = Directory.GetCurrentDirectory();
+            var folderPath = Path.Combine(path, @"..","..","TempFile"); 
             if (!Directory.Exists(folderPath))
             {
                 Directory.CreateDirectory(folderPath);
