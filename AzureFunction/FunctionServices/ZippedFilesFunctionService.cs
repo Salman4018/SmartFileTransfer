@@ -27,6 +27,7 @@ public class ZippedFilesFunctionService : IZippedFilesFunctionService
     /// <returns></returns>
     public async Task CreateAndSaveProtectedZippedFile(Stream blob, string folderPath, string filepath)
     {
+
         SaveStreamAsFile(blob, filepath);
         var byteFile = _CreateProtectedZipFile(folderPath, filepath);
 
@@ -79,6 +80,7 @@ public class ZippedFilesFunctionService : IZippedFilesFunctionService
         {
             File.Delete(zippedFile);
         }
+
         var zip = new ZipFile(zippedFile);
         var entry = zip.AddFile(filePath);
         entry.Password = "123456!";

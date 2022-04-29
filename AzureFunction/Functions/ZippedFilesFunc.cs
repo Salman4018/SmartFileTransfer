@@ -1,3 +1,4 @@
+using System;
 using System.IO;
 using System.Threading.Tasks;
 using AzureFunctions.FunctionServices.Interface;
@@ -30,14 +31,14 @@ namespace AzureFunctions.Functions
         /// <param name="myBlob"></param>
         /// <param name="name"></param>
         /// <param name="log"></param>
-        [FunctionName("ProtectedZippedFileTriggeredFunc")]
-        public async Task ProtectedZippedFileTriggeredFunc([BlobTrigger("azurefunctions4018zipblobtriggered/{name}", Connection = "")]Stream myBlob, string name, ILogger log)
+        [FunctionName("ZippedFileTriggeredFunc")]
+        public async Task ZippedFileTriggeredFunc([BlobTrigger("azurefunctions4018zipblobtriggered/{name}", Connection = "")]Stream myBlob, string name, ILogger log)
         {
             _log = log;
             log.LogInformation($"C# Blob trigger function Processed blob\n Name:{name} \n Size: {myBlob.Length} Bytes");
 
-            var path = Directory.GetCurrentDirectory();
-            var folderPath = Path.Combine(path, @"..","..","TempFile"); 
+            var folderPath = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString());
+            _log.LogInformation("FolderPath :: "+ folderPath);
             if (!Directory.Exists(folderPath))
             {
                 Directory.CreateDirectory(folderPath);
