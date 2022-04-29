@@ -1,6 +1,6 @@
-﻿namespace DataBase.Services.Interface;
+﻿namespace DataBase.DataBaseServices.Interface;
 
-public interface IGenericService<TC> where TC : class
+public interface IGenericDataBaseService<TC> where TC : class
 {
     Task<List<TC>> GetAll();
     Task<TC> GetById(int id);

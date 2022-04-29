@@ -1,15 +1,15 @@
-﻿using DataBase.Models;
-using DataBase.Services.Interface;
+﻿using DataBase.DataBaseServices.Interface;
+using DataBase.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
-namespace DataBase.Services;
+namespace DataBase.DataBaseServices;
 
-public class ProtectedZippedFilesService: IGenericService<ProtectedZippedFiles>
+public class DataBaseZippedFilesService: IGenericDataBaseService<ProtectedZippedFiles>
 {
     private readonly DBContext _dbContext;
     private readonly ILogger _log;
-    public ProtectedZippedFilesService(DBContext dbContext, ILogger log)
+    public DataBaseZippedFilesService(DBContext dbContext, ILogger log)
     {
         _dbContext = dbContext;
         _log = log;
@@ -21,7 +21,16 @@ public class ProtectedZippedFilesService: IGenericService<ProtectedZippedFiles>
     /// <exception cref="NotImplementedException"></exception>
     public async Task<List<ProtectedZippedFiles>> GetAll()
     {
-        throw new NotImplementedException();
+        try
+        {
+            var zippedFiles = await _dbContext.ProtectedZippedFiles.ToListAsync();
+            return zippedFiles;
+        }
+        catch (Exception ex)
+        {
+            _log.LogError("Error Occurred in ProtectedZippedFilesService 'GetAll'", ex);
+            return null;
+        }
     }
 
     /// <summary>
@@ -32,7 +41,16 @@ public class ProtectedZippedFilesService: IGenericService<ProtectedZippedFiles>
     /// <exception cref="NotImplementedException"></exception>
     public async Task<ProtectedZippedFiles> GetById(int id)
     {
-        throw new NotImplementedException();
+        try
+        {
+            var zippedFiles = await _dbContext.ProtectedZippedFiles.ToListAsync();
+            return zippedFiles.FirstOrDefault(i => i.Id.Equals(id));
+        }
+        catch (Exception ex)
+        {
+            _log.LogError("Error Occurred in CustomerService 'GetAll'", ex);
+            return null;
+        }
     }
 
     /// <summary>

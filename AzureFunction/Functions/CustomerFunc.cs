@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
+using DataBase.DataBaseServices.Interface;
 using DataBase.Models;
-using DataBase.Services.Interface;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.WebJobs;
@@ -9,10 +9,10 @@ using Microsoft.Extensions.Logging;
 
 namespace AzureFunctions.Functions
 {
-    public  class CustomerDataFunc
+    public  class CustomerFunc
     {
-        private readonly IGenericService<Customer> _customerService;
-        public CustomerDataFunc(IGenericService<Customer> customerService)
+        private readonly IGenericDataBaseService<Customer> _customerService;
+        public CustomerFunc(IGenericDataBaseService<Customer> customerService)
         {
             _customerService = customerService;
         }

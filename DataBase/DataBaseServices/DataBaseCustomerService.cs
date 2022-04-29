@@ -1,15 +1,15 @@
-﻿using DataBase.Models;
-using DataBase.Services.Interface;
+﻿using DataBase.DataBaseServices.Interface;
+using DataBase.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
-namespace DataBase.Services
+namespace DataBase.DataBaseServices
 {
-    public class CustomerService: IGenericService<Customer>
+    public class DataBaseCustomerService: IGenericDataBaseService<Customer>
     {
         private readonly DBContext _dbContext;
         private readonly ILogger _log;
-        public CustomerService(DBContext dbContext, ILogger log)
+        public DataBaseCustomerService(DBContext dbContext, ILogger log)
         {
             _dbContext = dbContext;
             _log = log;
@@ -42,7 +42,16 @@ namespace DataBase.Services
         /// <exception cref="NotImplementedException"></exception>
         public async Task<Customer> GetById(int id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var customersList = await _dbContext.Customer.ToListAsync();
+                return customersList.FirstOrDefault(i => i.Id.Equals(id));
+            }
+            catch (Exception ex)
+            {
+                _log.LogError("Error Occurred in CustomerService 'GetAll'", ex);
+                return null;
+            }
         }
 
         /// <summary>

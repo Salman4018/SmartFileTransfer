@@ -1,8 +1,10 @@
 ﻿using System;
 using AzureFunctions;
+using AzureFunctions.FunctionServices;
+using AzureFunctions.FunctionServices.Interface;
+using DataBase.DataBaseServices;
+using DataBase.DataBaseServices.Interface;
 using DataBase.Models;
-using DataBase.Services;
-using DataBase.Services.Interface;
 using Microsoft.Azure.Functions.Extensions.DependencyInjection;
 using Microsoft.Azure.WebJobs.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -24,8 +26,9 @@ namespace AzureFunctions
                     .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking),
                 ServiceLifetime.Transient);
 
-            builder.Services.AddTransient<IGenericService<Customer>, CustomerService>();
-            builder.Services.AddTransient<IGenericService<ProtectedZippedFiles>, ProtectedZippedFilesService>();
+            builder.Services.AddTransient<IGenericDataBaseService<Customer>, DataBaseCustomerService>();
+            builder.Services.AddTransient<IGenericDataBaseService<ProtectedZippedFiles>, DataBaseZippedFilesService>();
+            builder.Services.AddTransient<IZippedFilesFunctionService, ZippedFilesFunctionService>();
         }
     }
 }

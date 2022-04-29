@@ -2,14 +2,22 @@
 #nullable disable
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
 namespace DataBase.Models
 {
-    public partial class ProtectedZippedFiles
+    public partial class ZippedFiles
     {
+        [Key]
         public int Id { get; set; }
+        [Required]
+        [StringLength(255)]
         public string Name { get; set; }
+        [Required]
         public byte[] FileContent { get; set; }
+        [Column(TypeName = "datetime")]
         public DateTime CreatedDateTime { get; set; }
     }
 }
