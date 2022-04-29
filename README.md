@@ -1,1 +1,1 @@
-# SmartFileTransfer
+BlazorFuncWebWithdbContext EFCore

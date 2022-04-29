@@ -1,0 +1,9 @@
+{
+  "IsEncrypted": false,
+  "Values": {
+    "AzureWebJobsStorage": "DefaultEndpointsProtocol=https;AccountName=azurefunctions4018blob;AccountKey=7Fu6jLp3iwKfDuoDD8LvdlfT3DzEMnnWtcckgvij+8hl2ZC5LM7ZICL/VgzaUwWzhQ+0b6CQMiki+AStgbt8Aw==;BlobEndpoint=https://azurefunctions4018blob.blob.core.windows.net/;TableEndpoint=https://azurefunctions4018blob.table.core.windows.net/;QueueEndpoint=https://azurefunctions4018blob.queue.core.windows.net/;FileEndpoint=https://azurefunctions4018blob.file.core.windows.net/",
+    "FUNCTIONS_WORKER_RUNTIME": "dotnet",
+    "SqlConnectionString": "Server=tcp:azurefunctionsqlserver.database.windows.net,1433;Initial Catalog=AzurefunctionSQL;Persist Security Info=False;User ID=AzurefunctionSQL;Password=Kohatian@4018;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"
+  }
+
+}
