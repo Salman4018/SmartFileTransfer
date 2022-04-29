@@ -16,6 +16,10 @@
       {
          "Name": "[dbo].[Customer]",
          "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[ProtectedZippedFiles]",
+         "ObjectType": 0
       }
    ],
    "UiHint": "azurefunctionsqlserver.AzurefunctionSQL",

@@ -20,6 +20,7 @@ namespace DataBase.Models
         }
 
         public virtual DbSet<Customer> Customer { get; set; }
+        public virtual DbSet<ProtectedZippedFiles> ProtectedZippedFiles { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -27,13 +28,24 @@ namespace DataBase.Models
 
             modelBuilder.Entity<Customer>(entity =>
             {
-                entity.HasNoKey();
-
                 entity.Property(e => e.Address)
                     .HasMaxLength(255)
                     .IsUnicode(false);
 
                 entity.Property(e => e.Name)
+                    .IsRequired()
+                    .HasMaxLength(255)
+                    .IsUnicode(false);
+            });
+
+            modelBuilder.Entity<ProtectedZippedFiles>(entity =>
+            {
+                entity.Property(e => e.CreatedDateTime).HasColumnType("datetime");
+
+                entity.Property(e => e.FileContent).IsRequired();
+
+                entity.Property(e => e.Name)
+                    .IsRequired()
                     .HasMaxLength(255)
                     .IsUnicode(false);
             });

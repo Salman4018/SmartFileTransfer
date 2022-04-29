@@ -5,10 +5,11 @@ using System.Collections.Generic;
 
 namespace DataBase.Models
 {
-    public partial class Customer
+    public partial class ProtectedZippedFiles
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public string Address { get; set; }
+        public byte[] FileContent { get; set; }
+        public DateTime CreatedDateTime { get; set; }
     }
 }
